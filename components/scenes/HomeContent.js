@@ -21,7 +21,7 @@ class HomeContent extends Component {
   }
   setSearchText(event){
     let searchText = event.nativeEvent.text;
-   base.fetch(‘notes’, {
+   base.fetch('notes', {
    context: this,
    asArray: true,
    then(contacts){
@@ -55,6 +55,11 @@ filterNotes(searchText, notes) {
          <TouchableHighlight onPress={() => { goto( this.context.store, 'Contacts') } } style={{flex: 1,
     marginTop: 10, backgroundColor: 'rgba(220,220,220,0.7)', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 20, }}>
            <Text style={{alignSelf: 'center'}}>Read Contacts</Text>
+         </TouchableHighlight>
+
+         <TouchableHighlight onPress={() => { goto( this.context.store, 'PhoneCall') } } style={{flex: 1,
+    marginTop: 10, backgroundColor: 'rgba(220,220,220,0.7)', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 20, }}>
+           <Text style={{alignSelf: 'center'}}>Make a call</Text>
          </TouchableHighlight>
           
         </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView,TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, ScrollView,TouchableHighlight, StyleSheet, TextInput } from 'react-native';
 var Contacts = require('react-native-contacts');
 import { Card,Button } from 'react-native-material-design';
 
@@ -9,6 +9,7 @@ class HomeContent extends Component {
     super();
     this.state={
       allContacts:[],
+      search:'',
       loaded: false
     } 
   }
@@ -28,33 +29,46 @@ class HomeContent extends Component {
       }
     })
   }
-  
+  setSearchText(event){
+    let searchText = event.nativeEvent.text;
+   base.fetch(‘notes’, {
+   context: this,
+   asArray: true,
+   then(contacts){
+     var filteredData = this.filterNotes(searchText, contacts);
+     var allContacts = filteredData;
+     this.setState({
+       allContacts
+      });
+   }
+ });
+}
+
+filterNotes(searchText, notes) {
+  let text = searchText.toLowerCase();
+
+  return filter(notes, (n) => {
+    let note = n.body.toLowerCase();
+    return note.search(text) !== -1;
+  });
+}
   render(){
     if(!this.state.loaded){
       return this.renderLoadingView();
     }
     return(
       <View style={{ flex: 1 }}>
-      <View style={{backgroundColor:'#ccc'}}>
       <View style={{flexDirection:'row'}}>
-        <TouchableHighlight style={styles.logout}>
-          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Logout</Text>
+        <TextInput
+              placeholder="Enter name"
+              placeholderTextColor="#bbb"
+              onChange={this.setSearchText.bind(this)}
+              value={ this.state.search}
+              style={styles.inputBox}
+            />
+        <TouchableHighlight style={styles.clockin} onPress={ (this.search.bind(this)) }>
+          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>search</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.clockin}>
-          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Clock In</Text>
-        </TouchableHighlight>
-        </View>
-        <View style={{flexDirection:'row'}}>
-        <TouchableHighlight style={styles.Today}>
-          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Today</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.Today}>
-          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Week</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.Today}>
-          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Month</Text>
-        </TouchableHighlight>
-        </View>
         </View>
         <ScrollView>
           <View>
@@ -62,10 +76,10 @@ class HomeContent extends Component {
                 <Card key={contacts.recordID} style={{ backgroundColor: 'whitesmoke', padding: 10, margin: 1 }}>
                   <Card.Body >
                     <Text>
-                      {contacts.givenName + ' ' + contacts.middleName} 
+                      {contacts.givenName} {contacts.middleName==null? '' : contacts.middleName} 
                     </Text>
                       {contacts.phoneNumbers.map((numbers)=>(
-                          <Text>{ numbers.number}</Text>
+                          <Text>{ numbers.number }</Text>
                         ))}
                   </Card.Body>
                 </Card>
@@ -95,8 +109,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   clockin:{
-    backgroundColor:'#000',
-    width:180,
+    backgroundColor:'red',
+    width:100,
     borderColor: '#ccc',
     borderRadius: 10, 
     borderWidth: 1,
@@ -110,6 +124,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center'
   },
+  inputBox: {
+    flex: 1,
+    height: 60,
+    backgroundColor: '#F0F0F0',
+    marginTop: 10,
+    paddingLeft: 15,
+  },
+
 
 })
 module.exports = HomeContent;

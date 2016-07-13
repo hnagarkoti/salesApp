@@ -63,6 +63,7 @@ let defaultSchema = {
 
 import HomeContent from './scenes/HomeContent';
 import ViewMap from './scenes/ViewMap';
+import Contacts from './scenes/Contacts';
 
 
 class AApplication extends Component{
@@ -169,8 +170,8 @@ class AApplication extends Component{
         <Router initial="Welcome" {...this.props} ref="router" >
           <Schema name="default" {...defaultSchema} />
           <Route name="Welcome" component={HomeContent} title="" sidebar={sidebar} />
-          <Route name="ViewMap" hideNavbar={true} component={ViewMap} title="" sidebar={sidebar} />
-          
+          <Route name="ViewMap" hideNavBar={true} component={ViewMap} title="" sidebar={sidebar} />
+          <Route name="Contacts" hideNavBar={true} component={Contacts} title="" sidebar={sidebar} />
         </Router>
     );
   }

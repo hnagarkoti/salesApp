@@ -7,10 +7,9 @@ var {
   Text,
   Dimensions,
   TouchableOpacity,
-  MapView
 } = ReactNative;
 
-// var MapView = require('react-native-maps');
+var MapView = require('react-native-maps');
 
 var { width, height } = Dimensions.get('window');
 
@@ -50,20 +49,21 @@ var DisplayLatLng = React.createClass({
   },
 
   componentDidMount: function() {
+    console.log('this stat:-- ', this.state.latitude, 'longitude:- ', this.state.longitude);
     this.setState({
-      latitude: this.props.latitude,
-      longitude: this.props.longitude,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
       circle: {
         center: {
-          latitude: this.props.latitude,
-          longitude: this.props.longitude,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
         },
         radius: 700,
       },
       miniCircle: {
         center: {
-          latitude: this.props.latitude,
-          longitude: this.props.longitude,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
         },
         radius: 100,
       },
@@ -92,16 +92,36 @@ var DisplayLatLng = React.createClass({
 
   render() {
     const { circle, miniCircle } = this.state;
-
    if(!this.state.longitude){
     return this.renderLoadingView();
    }
+   console.log('longitude at later :- ', this.state.longitude);
     return (
       <View style={styles.container}>
         <MapView
-        style={{height: 200, margin: 40}}
-        showsUserLocation={true}
-      />
+          style={styles.map}
+          initialRegion={{
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            latitudeDelta: this.state.latitudeDelta,
+            longitudeDelta: this.state.longitudeDelta,
+          }}
+        >
+
+        <MapView.Circle
+            center={circle.center}
+            radius={circle.radius}
+            fillColor="rgba(200, 0, 0, 0.5)"
+            strokeColor="rgba(0,0,0,0.5)"
+          />
+          <MapView.Circle
+            center={miniCircle.center}
+            radius={miniCircle.radius}
+            fillColor="#2E2EFE"
+            strokeColor="rgba(0,0,0,0.5)"
+          />
+
+        </MapView>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text style={{ marginRight: 10 }}>Initial: {this.state.initialPosition}</Text>
           <Text>Last: {this.state.lastPosition}</Text>

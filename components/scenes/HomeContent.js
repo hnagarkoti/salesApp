@@ -1,33 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView,TouchableHighlight, StyleSheet, TextInput } from 'react-native';
-var Contacts = require('react-native-contacts');
-import { Card,Button } from 'react-native-material-design';
+import { 
+  View, 
+  Text, 
+  TouchableHighlight, 
+  StyleSheet, 
+  ScrollView 
+} from 'react-native';
+
+import { goto, goBack } from '../../libs/routerUtils';
 
 class HomeContent extends Component {
 
   constructor(){
     super();
-    this.state={
-      allContacts:[],
-      search:'',
-      loaded: false
-    } 
+   
   }
 
   componentDidMount(){
-    var me = this;
-    Contacts.getAll((err, contacts) => {
-      if(err && err.type === 'permissionDenied'){
-        console.log('permissionDenied',err);
-      } else {
-        console.log('contacts[0]:--- ',contacts);
-        let allContacts = contacts;
-      me.setState({allContacts});
-      me.setState({
-        loaded: true
-      })
-      }
-    })
+   
   }
   setSearchText(event){
     let searchText = event.nativeEvent.text;
@@ -53,39 +43,22 @@ filterNotes(searchText, notes) {
   });
 }
   render(){
-    if(!this.state.loaded){
-      return this.renderLoadingView();
-    }
     return(
       <View style={{ flex: 1 }}>
-      <View style={{flexDirection:'row'}}>
-        <TextInput
-              placeholder="Enter name"
-              placeholderTextColor="#bbb"
-              onChange={this.setSearchText.bind(this)}
-              value={ this.state.search}
-              style={styles.inputBox}
-            />
-        <TouchableHighlight style={styles.clockin} onPress={ (this.search.bind(this)) }>
-          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>search</Text>
-        </TouchableHighlight>
+      <ScrollView>
+        <View style={ { flexDirection: 'column', flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50 } }>
+         <TouchableHighlight onPress={() => { goto( this.context.store, 'ViewMap') } }  style={{flex: 1,
+    marginTop: 10, backgroundColor: 'rgba(220,220,220,0.7)', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 20, }}>
+           <Text style={{alignSelf: 'center'}}>Show my current position</Text>
+         </TouchableHighlight>
+
+         <TouchableHighlight onPress={() => { goto( this.context.store, 'Contacts') } } style={{flex: 1,
+    marginTop: 10, backgroundColor: 'rgba(220,220,220,0.7)', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 20, }}>
+           <Text style={{alignSelf: 'center'}}>Read Contacts</Text>
+         </TouchableHighlight>
+          
         </View>
-        <ScrollView>
-          <View>
-           { this.state.allContacts.map((contacts) => (
-                <Card key={contacts.recordID} style={{ backgroundColor: 'whitesmoke', padding: 10, margin: 1 }}>
-                  <Card.Body >
-                    <Text>
-                      {contacts.givenName} {contacts.middleName==null? '' : contacts.middleName} 
-                    </Text>
-                      {contacts.phoneNumbers.map((numbers)=>(
-                          <Text>{ numbers.number }</Text>
-                        ))}
-                  </Card.Body>
-                </Card>
-               )) }
-              < /View>
-        </ScrollView>
+      </ScrollView>
       </View>
       )
   }
@@ -99,6 +72,11 @@ filterNotes(searchText, notes) {
       )
   }
 }
+
+HomeContent.contextTypes = {
+  openDrawer: React.PropTypes.func,
+  store: React.PropTypes.object.isRequired
+};
 const styles = StyleSheet.create({
   logout: {
     backgroundColor:'#000',

@@ -35,6 +35,7 @@ class HomeContent extends Component {
     }
     return(
       <View style={{ flex: 1 }}>
+      <View style={{backgroundColor:'#ccc'}}>
       <View style={{flexDirection:'row'}}>
         <TouchableHighlight style={styles.logout}>
           <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Logout</Text>
@@ -42,6 +43,18 @@ class HomeContent extends Component {
         <TouchableHighlight style={styles.clockin}>
           <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Clock In</Text>
         </TouchableHighlight>
+        </View>
+        <View style={{flexDirection:'row'}}>
+        <TouchableHighlight style={styles.Today}>
+          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Today</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.Today}>
+          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Week</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.Today}>
+          <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Month</Text>
+        </TouchableHighlight>
+        </View>
         </View>
         <ScrollView>
           <View>
@@ -51,9 +64,9 @@ class HomeContent extends Component {
                     <Text>
                       {contacts.givenName + ' ' + contacts.middleName} 
                     </Text>
-                    <Text>
-                      {contacts.phoneNumbers.label === 'mobile' ? contacts.phoneNumbers.number : null }
-                    </Text>
+                      {contacts.phoneNumbers.map((numbers)=>(
+                          <Text>{ numbers.number}</Text>
+                        ))}
                   </Card.Body>
                 </Card>
                )) }
@@ -88,7 +101,15 @@ const styles = StyleSheet.create({
     borderRadius: 10, 
     borderWidth: 1,
     alignItems: 'center'
-  }
+  },
+  Today: {
+    backgroundColor:'#000',
+    width:120,
+    borderColor: '#ccc',
+    borderRadius: 10, 
+    borderWidth: 1,
+    alignItems: 'center'
+  },
 
 })
 module.exports = HomeContent;

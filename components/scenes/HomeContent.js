@@ -19,29 +19,7 @@ class HomeContent extends Component {
   componentDidMount(){
    
   }
-  setSearchText(event){
-    let searchText = event.nativeEvent.text;
-   base.fetch(‘notes’, {
-   context: this,
-   asArray: true,
-   then(contacts){
-     var filteredData = this.filterNotes(searchText, contacts);
-     var allContacts = filteredData;
-     this.setState({
-       allContacts
-      });
-   }
- });
-}
-
-filterNotes(searchText, notes) {
-  let text = searchText.toLowerCase();
-
-  return filter(notes, (n) => {
-    let note = n.body.toLowerCase();
-    return note.search(text) !== -1;
-  });
-}
+  
   render(){
     return(
       <View style={{ flex: 1 }}>

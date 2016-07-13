@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView,TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, ScrollView,TouchableHighlight, StyleSheet,TextInput } from 'react-native';
 var Contacts = require('react-native-contacts');
 import { Card,Button } from 'react-native-material-design';
 
@@ -9,10 +9,15 @@ class ContactDetail extends Component {
     super();
     this.state={
       allContacts:[],
-      loaded: false
+      loaded: false,
+      searchText:''
     } 
   }
-
+setSearchText(event){
+  console.log("------------");
+   let searchText = event.nativeEvent.text;
+ this.setState({searchText});
+}
   componentDidMount(){
     var me = this;
     Contacts.getAll((err, contacts) => {
@@ -55,6 +60,7 @@ class ContactDetail extends Component {
           <Text style={{color: '#ffffff',fontSize: 18,textAlign: 'center',margin: 9}}>Month</Text>
         </TouchableHighlight>
         </View>
+        <TextInput style={styles.searchBar} value={this.state.searchText} onChange={this.setSearchText.bind(this)} placeholder="Search" />
         </View>
         <ScrollView>
           <View>
@@ -62,7 +68,7 @@ class ContactDetail extends Component {
                 <Card key={contacts.recordID} style={{ backgroundColor: 'whitesmoke', padding: 10, margin: 1 }}>
                   <Card.Body >
                     <Text>
-                      {contacts.givenName + ' ' + contacts.middleName} 
+                       {contacts.givenName} {contacts.middleName==null? '' : contacts.middleName}
                     </Text>
                       {contacts.phoneNumbers.map((numbers)=>(
                           <Text>{ numbers.number}</Text>
@@ -110,6 +116,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center'
   },
+  searchBar: {
+  paddingLeft: 30,
+  fontSize: 15,
+  height: 10,
+  flex: .1,
+  borderWidth: 9,
+  borderColor: '#E4E4E4'
+}
 
 })
 module.exports = ContactDetail;

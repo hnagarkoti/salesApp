@@ -99,29 +99,9 @@ var DisplayLatLng = React.createClass({
     return (
       <View style={styles.container}>
         <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: LATITUDE,
-            longitude: LONGITUDE,
-            latitudeDelta: 0,
-            longitudeDelta: 0,
-          }}
-        >
-
-        <MapView.Circle
-            center={circle.center}
-            radius={circle.radius}
-            fillColor="rgba(200, 0, 0, 0.5)"
-            strokeColor="rgba(0,0,0,0.5)"
-          />
-          <MapView.Circle
-            center={miniCircle.center}
-            radius={miniCircle.radius}
-            fillColor="#2E2EFE"
-            strokeColor="rgba(0,0,0,0.5)"
-          />
-        
-        </MapView>
+        style={{height: 200, margin: 40}}
+        showsUserLocation={true}
+      />
         <View style={{flex: 1, flexDirection: 'column'}}>
           <Text style={{ marginRight: 10 }}>Initial: {this.state.initialPosition}</Text>
           <Text>Last: {this.state.lastPosition}</Text>

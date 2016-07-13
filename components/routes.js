@@ -62,31 +62,8 @@ let defaultSchema = {
 };
 
 import HomeContent from './scenes/HomeContent';
-// import Profile from './scenes/User/ProfileContent';
-// import LoginView from './scenes/LoginView';
-// import About from './scenes/About/About.js';
-// import Password from './scenes/User/Password';
-// import Email from './scenes/User/Email';
-// import Tinder from './scenes/SlidingStuff/Tinder';
-// import Share from './scenes/Share';
-// import Product from './scenes/Product';
-// import Favourite from './scenes/Favourite';
-// import Alert from './scenes/Alert';
-// import FavouriteShare from './scenes/FavouriteShare';
-// import EmpId from './scenes/Auth/EmpId';
-// import OTP from './scenes/Auth/OTP';
-// import SetPass from './scenes/Auth/SetPass';
-// import PopUp from './scenes/PopUp';
-// import Preview from './scenes/Preview';
-// import Setting from './scenes/Settings';
-// import ProfilePreview from './scenes/User/ProfilePreview';
-// import Help from './scenes/Help';
-// import PDFViewer from './scenes/PDFViewer';
-// // import Password from './scenes/User/Password';
-// import SplashPage from './scenes/SplashPage';
-// import PdfGridView from './scenes/PdfGridView';
-// import PagerView from './scenes/PagerView';
-// import PreviewForZomming from './scenes/PreviewForZomming';
+import ViewMap from './scenes/ViewMap';
+
 
 class AApplication extends Component{
 
@@ -192,6 +169,7 @@ class AApplication extends Component{
         <Router initial="Welcome" {...this.props} ref="router" >
           <Schema name="default" {...defaultSchema} />
           <Route name="Welcome" component={HomeContent} title="" sidebar={sidebar} />
+          <Route name="ViewMap" hideNavbar={true} component={ViewMap} title="" sidebar={sidebar} />
           
         </Router>
     );

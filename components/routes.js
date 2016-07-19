@@ -65,6 +65,7 @@ import HomeContent from './scenes/HomeContent';
 import ViewMap from './scenes/ViewMap';
 import Contacts from './scenes/Contacts';
 import PhoneCall from './scenes/PhoneCall';
+import FBLogin from './scenes/FBLogin';
 
 
 class AApplication extends Component{
@@ -172,6 +173,7 @@ class AApplication extends Component{
           <Schema name="default" {...defaultSchema} />
           <Route name="Welcome" component={HomeContent} title="" sidebar={sidebar} />
           <Route name="ViewMap" hideNavBar={true} component={ViewMap} title="" sidebar={sidebar} />
+          <Route name="FBLogin" hideNavBar={true} component={FBLogin} title="" sidebar={sidebar} />
           <Route name="Contacts" hideNavBar={true} component={Contacts} title="" sidebar={sidebar} />
           <Route name="PhoneCall" hideNavBar={true} component={PhoneCall} title="Make a New Call" sidebar={sidebar} />
         </Router>

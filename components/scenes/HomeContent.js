@@ -39,6 +39,10 @@ class HomeContent extends Component {
     marginTop: 10, backgroundColor: 'rgba(220,220,220,0.7)', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 20, }}>
            <Text style={{alignSelf: 'center'}}>Make a call</Text>
          </TouchableHighlight>
+         <TouchableHighlight onPress={() => { goto( this.context.store, 'FBLogin') } } style={{flex: 1,
+    marginTop: 10, backgroundColor: 'rgba(220,220,220,0.7)', paddingHorizontal: 18, paddingVertical: 12, borderRadius: 20, }}>
+           <Text style={{alignSelf: 'center'}}>FBLogin</Text>
+         </TouchableHighlight>
           
         </View>
       </ScrollView>
